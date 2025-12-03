@@ -4,6 +4,7 @@ import './App.css'
 
 function App() {
   const canvasRef = useRef(null)
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -139,6 +140,52 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth > 768 && heroRef.current) {
+        const scrollY = window.scrollY
+        
+        // Get the timeline end content and footer elements
+        const endContent = document.querySelector('.timeline-end-content')
+        const footer = document.querySelector('.footer')
+        
+        if (endContent) {
+          const endContentRect = endContent.getBoundingClientRect()
+          
+          // Check if end content is visible in viewport
+          const isEndContentVisible = endContentRect.top < window.innerHeight
+          
+          if (isEndContentVisible) {
+            // Stop moving - keep current transform
+            return
+          }
+        }
+        
+        // Calculate max translateY to prevent overlap with footer
+        if (footer) {
+          const heroHeight = heroRef.current.offsetHeight
+          const footerTop = footer.offsetTop
+          const maxTranslateY = footerTop - heroHeight - 150 // 150px buffer
+          
+          // Move down with scroll but limit to prevent footer overlap
+          const translateY = Math.min(scrollY, maxTranslateY)
+          
+          heroRef.current.style.transform = `translateY(${translateY}px)`
+          heroRef.current.style.willChange = 'transform'
+        } else {
+          // Fallback if footer not found
+          const translateY = scrollY
+          heroRef.current.style.transform = `translateY(${translateY}px)`
+          heroRef.current.style.willChange = 'transform'
+        }
+      }
+    }
+
+    handleScroll() // Call once on mount
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
     <div className="app-container">
       <header className="header">
@@ -158,17 +205,17 @@ function App() {
           <canvas ref={canvasRef} className="bg-canvas" />
         </div>
 
-        <section className="hero">
+        <section className="hero" ref={heroRef}>
           <div className="profile-container">
             <img src="/francisco-picture.jpg" alt="Francisco Costa" className="profile-image" />
             <h2 className="name">Francisco Costa</h2>
             <p className="tagline">DevOps Engineer</p>
           </div>
           <div className="social-links">
-            <a href="https://github.com" title="GitHub" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/franciscoocostaa11-crypto" title="GitHub" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-github"></i>
             </a>
-            <a href="https://linkedin.com" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.linkedin.com/in/franciscoocosta/" title="LinkedIn" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-linkedin"></i>
             </a>
           </div>
@@ -272,6 +319,41 @@ function App() {
         </section>
 
       </main>
+
+      <section className="projects">
+        <div className="projects-container">
+          <h2 className="projects-title">Academic & Athletic Background</h2>
+          <div className="projects-grid">
+            {/* Project 1 */}
+            <div className="project-card project-blue">
+              <div className="project-icon">
+                <i className="fas fa-graduation-cap"></i>
+              </div>
+              <h3>ISEP</h3>
+              <p className="project-description">
+                Bachelor's degree in Systems Engineering from ISEP, where I developed strong foundations in software development, systems architecture, and problem-solving within technical environments.
+              </p>
+            </div>
+
+            {/* Project 2 */}
+            <div className="project-card project-red">
+              <div className="project-icon">
+                <i className="fas fa-person-running"></i>
+              </div>
+              <h3>Football Player</h3>
+              <p className="project-description">
+                Played football for 15 years, progressing through competitive levels and ultimately reaching the professional tier. This experience strengthened my discipline, teamwork, and resilience.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="footer">
+        <div className="footer-content">
+          <p>&copy; {new Date().getFullYear()} Francisco Costa. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   )
 }
