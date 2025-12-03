@@ -183,7 +183,7 @@ function App() {
 
         <section className="timeline">
           <div className="timeline-container">
-            <h2 className="timeline-title">Timeline</h2>
+            <h2 className="timeline-title">Work Experience Timeline</h2>
             
             <div className="timeline-items">
               {/* Item 1 */}
@@ -233,9 +233,44 @@ function App() {
                   </p>
                 </div>
               </div>
+
+              {/* Item 5 */}
+              <div className="timeline-item left">
+                <div className="timeline-content">
+                  <h3>Full Stack Developer</h3>
+                  <p className="company">Personal Projects</p>
+                  <p className="date">2021</p>
+                  <p className="description">
+                    Started my journey in full-stack development, building web applications with modern technologies. Developed multiple projects showcasing expertise in frontend, backend, and database design.
+                  </p>
+                </div>
+              </div>
+
+              {/* Item 6 */}
+              <div className="timeline-item right">
+                <div className="timeline-content">
+                  <h3>Computer Science Journey Begins</h3>
+                  <p className="company">Education</p>
+                  <p className="date">2018</p>
+                  <p className="description">
+                    Started my academic journey in Computer Science, laying the foundation for my career in technology and cybersecurity.
+                  </p>
+                </div>
+              </div>
+
+              {/* Ending Icon */}
+              <div className="timeline-start-icon">
+                <img src="/accenture-logo.png" alt="Accenture-logo" />
+              </div>
+              
+              <div className="timeline-end-content">
+                <h3>Accenture Technology</h3>
+              
+              </div>
             </div>
           </div>
         </section>
+
       </main>
     </div>
   )
