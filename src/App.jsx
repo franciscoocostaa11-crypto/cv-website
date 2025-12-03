@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import './App.css'
 
 function App() {
   const canvasRef = useRef(null)
   const heroRef = useRef(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -188,23 +189,30 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <div className="header-content">
-          <h1 className="logo">Francisco Costa</h1>
-          <nav className="nav">
-            <a href="#home">HOME</a>
-            <a href="#blog">BLOG</a>
-            <a href="#impossible">IMPOSSIBLE LIST</a>
-            <a href="#cv">CV</a>
+      <button className="hamburger-menu" onClick={() => setIsDrawerOpen(true)} aria-label="Open menu">
+        <i className="fas fa-bars"></i>
+      </button>
+
+      <div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
+        <div className="drawer-overlay" onClick={() => setIsDrawerOpen(false)}></div>
+        <div className="drawer-content">
+          <button className="drawer-close" onClick={() => setIsDrawerOpen(false)} aria-label="Close menu">
+            <i className="fas fa-times"></i>
+          </button>
+          <nav className="drawer-nav">
+            <a href="#home" onClick={() => setIsDrawerOpen(false)}>HOME</a>
+            <a href="#blog" onClick={() => setIsDrawerOpen(false)}>BLOG</a>
+            <a href="#impossible" onClick={() => setIsDrawerOpen(false)}>IMPOSSIBLE LIST</a>
+            <a href="#cv" onClick={() => setIsDrawerOpen(false)}>CV</a>
           </nav>
         </div>
-      </header>
+      </div>
+
+      <div className="background-animation">
+        <canvas ref={canvasRef} className="bg-canvas" />
+      </div>
 
       <main className="main-content">
-        <div className="background-animation">
-          <canvas ref={canvasRef} className="bg-canvas" />
-        </div>
-
         <section className="hero" ref={heroRef}>
           <div className="profile-container">
             <img src="/francisco-picture.jpg" alt="Francisco Costa" className="profile-image" />
@@ -239,69 +247,85 @@ function App() {
                   <h3>Research Assistant</h3>
                   <p className="company">LangSec Group @ KTH</p>
                   <p className="date">September 2024</p>
-                  <p className="description">
-                    I worked as a research assistant at the LangSec group at KTH, where I investigated the impact and prevalence of client-side prototype pollution in various websites. As part of this work, I developed a <a href="#" className="content-link">Chromium fork</a> to detect prototype pollution gadgets when a vulnerable website is visited.
-                  </p>
+                  <ul className="description-list">
+                    <li>Designed and executed comprehensive load testing scenarios</li>
+                    <li>Analyzed system performance under various load conditions</li>
+                    <li>Identified bottlenecks and provided optimization recommendations</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Item 2 */}
               <div className="timeline-item right">
                 <div className="timeline-content">
-                  <h3>IST Delegate Election</h3>
+                  <h3>IST Delegate Election Customer Service in SAP Environment as DevOps Engineer</h3>
                   <p className="company">Election app for Técnico's Pedagogical Council</p>
                   <p className="date">October 2023</p>
-                  <p className="description">
-                    Since I was member of the Pedagogical Council in my last year at Técnico, I volunteered to re-build the delegate (student representative) <a href="#" className="content-link">election platform</a> using more modern technologies. It was built using Rust and React, which should result in a longer life span and need fewer maintenance.
-                  </p>
+                  <ul className="description-list">
+                    <li>Provided customer support for SAP environments.</li>
+                    <li>Performed troubleshooting on deployment issues.</li>
+                    <li>Used Kubernetes, monitoring tools, metrics analysis, and downtime investigation.</li>
+                    <li>Conducted root cause analysis (RCA) to identify and resolve production incidents.</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Item 3 */}
               <div className="timeline-item left">
                 <div className="timeline-content">
-                  <h3>KTH</h3>
+                  <h3>Migration of On-Premise Applications to Cloud</h3>
                   <p className="company">MSc Cybersecurity</p>
                   <p className="date">August 2023</p>
-                  <p className="description">
-                    I started a Cybersecurity Master programme at <a href="#" className="content-link">KTH Royal Institute of Technology</a> in Sweden.
-                  </p>
+                  <ul className="description-list">
+                    <li>Modernized legacy applications and containerized them using Docker.</li>
+                    <li>Performed deployments using GitLab Actions.</li>
+                    <li>Integrated and provisioned infrastructures on Azure and Google Cloud Platform (GCP).</li>
+                    <li>Ensured portability, performance, and scalability in the new cloud environments.</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Item 4 */}
               <div className="timeline-item right">
                 <div className="timeline-content">
-                  <h3>Friqu</h3>
+                  <h3>DevOps Solution for a Microservices Platform</h3>
                   <p className="company">A Rust and Yew.rs (Web Assembly) app</p>
                   <p className="date">April 2022</p>
-                  <p className="description">
-                    This was my first Web Assembly application, made with Yew.rs for the frontend and Axum for the backend. Friqu is a web app to help with grocery shopping and meal planning.
-                  </p>
+                  <ul className="description-list">
+                    <li>Developed CI/CD pipelines in GitLab for microservices and UI components.</li>
+                    <li>Automated deployments in VMware environments.</li>
+                    <li>Used Docker and Kubernetes for containerization and orchestration.</li>
+                    <li>Built a scalable and resilient application platform.</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Item 5 */}
               <div className="timeline-item left">
                 <div className="timeline-content">
-                  <h3>Full Stack Developer</h3>
+                  <h3>Replatforming in the Banking Sector</h3>
                   <p className="company">Personal Projects</p>
                   <p className="date">2021</p>
-                  <p className="description">
-                    Started my journey in full-stack development, building web applications with modern technologies. Developed multiple projects showcasing expertise in frontend, backend, and database design.
-                  </p>
+                  <ul className="description-list">
+                    <li>Modernized and automated legacy processes.</li>
+                    <li>Used GitHub Actions, Jenkins, and Ansible for CI/CD.</li>
+                    <li>Performed deployments in VMware environments.</li>
+                    <li>Integrated multiple tools to improve delivery time and reliability.</li>
+                  </ul>
                 </div>
               </div>
 
               {/* Item 6 */}
               <div className="timeline-item right">
                 <div className="timeline-content">
-                  <h3>Computer Science Journey Begins</h3>
-                  <p className="company">Education</p>
-                  <p className="date">2018</p>
-                  <p className="description">
-                    Started my academic journey in Computer Science, laying the foundation for my career in technology and cybersecurity.
-                  </p>
+                  <h3>Load Testing with JMeter</h3>
+                  <p className="work sector">Energy</p>
+                  <p className="date">2019</p>
+                  <ul className="description-list">
+                    <li>Conducted load tests using Apache JMeter.</li>
+                    <li>Assessed the performance of critical systems in the energy sector.</li>
+                    <li>Generated reports and identified bottlenecks to optimize system performance.</li>
+                  </ul>
                 </div>
               </div>
 
